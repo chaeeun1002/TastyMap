@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
   res.send("Expressサーバーが正常に実行中です！");
 });
 
-// 서버 실행
+// サーバー実行
 app.listen(PORT, () => {
   console.log(`サーバー実行中： http://localhost:${PORT}`);
 });
