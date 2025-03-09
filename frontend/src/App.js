@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import RangeSelector from "./components/RangeSelector";
+import RestaurantList from "./components/RestaurantList";
+import { fetchRestaurants } from "./api";
 
-function App() {
+// アプリのメインコンポーネント
+const App = () => {
+  const [restaurants, setRestaurants] = useState([]);
+
+  // 検索処理関数
+  const handleSearch = async (lat, lng, range) => {
+    const data = await fetchRestaurants(lat, lng, range);
+    setRestaurants(data);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>レストラン検索</h1>
+      <RangeSelector onSearch={handleSearch} />
+      <RestaurantList restaurants={restaurants} />
     </div>
   );
-}
+};
 
 export default App;
