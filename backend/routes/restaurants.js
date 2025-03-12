@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
       return res.status(400).json({ error: "Undefined lat, lng, range" });
     }
 
-    const pageNum = Math.max(1, Number(page)); // 페이지 값이 1보다 작을 경우 대비
+    const pageNum = Math.max(1, Number(page)); // ページ番号が1未満の場合は1に補正
 
     // ページネーションの設定
     const perPage = 10; // 1ページあたりの件数
@@ -44,9 +44,9 @@ router.get("/", async (req, res) => {
 
     // クライアントに JSON 形式でレストラン情報を返す
     res.json({
-      total: data.results.results_available, // 전체 검색 결과 데이터 갯수
-      perPage, // 한 페이지당 표시할 데이터 갯수
-      currentPage: page, // 현재 페이지 번호
+      total: data.results.results_available, // 総検索結果数
+      perPage, // 1ページあたりの件数
+      currentPage: page, // 現在のページ番号
       restaurants,
     });
   } catch (error) {

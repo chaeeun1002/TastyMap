@@ -1,6 +1,7 @@
 // バックエンドサーバーの基本URLを設定
 const API_BASE_URL = "http://localhost:5000";
 
+// レストラン一覧を取得する関数
 export const fetchRestaurants = async (lat, lng, range, page = 1) => {
   try {
     // fetch(requestUrl) -> APIにGETリクエストを送信
@@ -17,6 +18,7 @@ export const fetchRestaurants = async (lat, lng, range, page = 1) => {
   }
 };
 
+// レストランの詳細情報を取得する関数
 export const fetchRestaurantById = async (id) => {
   try {
     const response = await fetch(`${API_BASE_URL}/restaurant/${id}`);

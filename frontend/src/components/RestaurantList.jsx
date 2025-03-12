@@ -9,7 +9,7 @@ const RestaurantList = ({
   onPageChange,
 }) => {
   const navigate = useNavigate(); // 画面遷移用のフック
-  const totalPages = Math.ceil(total / perPage); // 전체 페이지 갯수 계산
+  const totalPages = Math.ceil(total / perPage); // 全ページ数を計算
 
   return (
     <div>
@@ -21,7 +21,7 @@ const RestaurantList = ({
           {restaurants.map((restaurant) => (
             // レストランのIDをkeyとして設定
             <li
-              key={restaurant.id}
+              key={restaurant.id} // 各レストランのIDをkeyとして設定
               onClick={() => navigate(`/restaurant/${restaurant.id}`)} // クリック時に詳細ページへ遷移
             >
               <img
@@ -36,11 +36,11 @@ const RestaurantList = ({
           ))}
         </ul>
       )}
-      {/* 페이지네이션 버튼 */}
+      {/* ページネーションボタン */}
       <div>
         <button
           onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
+          disabled={currentPage === 1} // 1ページ目では非活性化
         >
           前へ
         </button>
@@ -49,7 +49,7 @@ const RestaurantList = ({
         </span>
         <button
           onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage >= totalPages}
+          disabled={currentPage >= totalPages} // 最終ページでは非活性化
         >
           次へ
         </button>
