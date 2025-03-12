@@ -8,9 +8,9 @@ const HOTPEPPER_API_KEY = process.env.HOTPEPPER_API_KEY; // 環境変数からHo
 router.get("/", async (req, res) => {
   try {
     // クライアントから位置情報を取得
-    const { lat, lng, range } = req.query;
+    const { lat, lng, range, genre = "G000" } = req.query;
     let page = Math.max(1, Number(req.query.page) || 1);
-    console.log("received request", { lat, lng, range, page });
+    console.log("received request", { lat, lng, range, genre, page });
 
     // 必須パラメータのチェック
     if (!lat || !lng || !range) {
@@ -24,7 +24,12 @@ router.get("/", async (req, res) => {
     const start = (pageNum - 1) * perPage + 1; // APIの開始位置設定
 
     // Hotpepper API のリクエスト URL を作成
-    const apiUrl = `https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${HOTPEPPER_API_KEY}&lat=${lat}&lng=${lng}&range=${range}&count=${perPage}&start=${start}&order=4&format=json`;
+    let apiUrl = `https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${HOTPEPPER_API_KEY}&lat=${lat}&lng=${lng}&range=${range}&count=${perPage}&start=${start}&order=4&format=json`;
+
+    if (genre !== "G000") {
+      apiUrl += `&genre=${genre}`;
+    }
+
     console.log("Requesting Hotpepper API:", apiUrl);
 
     // Hotpepper API にリクエスト (タイムアウト: 5秒)
