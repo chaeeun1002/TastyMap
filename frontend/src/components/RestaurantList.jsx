@@ -1,8 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const RestaurantList = ({ restaurants }) => {
+const RestaurantList = ({
+  restaurants,
+  total,
+  perPage,
+  currentPage,
+  onPageChange,
+}) => {
   const navigate = useNavigate(); // 画面遷移用のフック
+  const totalPages = Math.ceil(total / perPage); // 전체 페이지 갯수 계산
 
   return (
     <div>
@@ -29,6 +36,24 @@ const RestaurantList = ({ restaurants }) => {
           ))}
         </ul>
       )}
+      {/* 페이지네이션 버튼 */}
+      <div>
+        <button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          前へ
+        </button>
+        <span>
+          {currentPage} / {totalPages}
+        </span>
+        <button
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage >= totalPages}
+        >
+          次へ
+        </button>
+      </div>
     </div>
   );
 };

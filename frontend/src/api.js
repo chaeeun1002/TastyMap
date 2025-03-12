@@ -1,11 +1,11 @@
 // バックエンドサーバーの基本URLを設定
 const API_BASE_URL = "http://localhost:5000";
 
-export const fetchRestaurants = async (lat, lng, range) => {
+export const fetchRestaurants = async (lat, lng, range, page = 1) => {
   try {
     // fetch(requestUrl) -> APIにGETリクエストを送信
     const response = await fetch(
-      `${API_BASE_URL}/restaurants?lat=${lat}&lng=${lng}&range=${range}`
+      `${API_BASE_URL}/restaurants?lat=${lat}&lng=${lng}&range=${range}&page=${page}`
     );
     if (!response.ok) throw new Error("Failed to fetch retaurants");
     console.log("ステータスコード : " + response.status);
@@ -13,7 +13,7 @@ export const fetchRestaurants = async (lat, lng, range) => {
     return await response.json();
   } catch (error) {
     console.error("API Error:", error);
-    return [];
+    return { total: 0, perPage: 5, currentPage: page, restaurants: [] };
   }
 };
 
