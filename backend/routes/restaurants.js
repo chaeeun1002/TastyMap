@@ -9,24 +9,22 @@ router.get("/", async (req, res) => {
   try {
     // クライアントから位置情報を取得
     const { lat, lng, range } = req.query;
-    console.log("received request", { lat, lng, range });
+    let page = Math.max(1, Number(req.query.page) || 1);
+    console.log("received request", { lat, lng, range, page });
 
     // 必須パラメータのチェック
     if (!lat || !lng || !range) {
       return res.status(400).json({ error: "Undefined lat, lng, range" });
     }
 
-    // APIの最大取得件数 (count) は 100 まで
-    // range に応じて count を調整し、検索結果に差をつける
-    let countValue;
-    if (range == 1) countValue = 10;
-    else if (range == 2) countValue = 20;
-    else if (range == 3) countValue = 50;
-    else if (range == 4) countValue = 80;
-    else countValue = 100;
+    const pageNum = Math.max(1, Number(page)); // 페이지 값이 1보다 작을 경우 대비
+
+    // ページネーションの設定
+    const perPage = 10; // 1ページあたりの件数
+    const start = (pageNum - 1) * perPage + 1; // APIの開始位置設定
 
     // Hotpepper API のリクエスト URL を作成
-    const apiUrl = `https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${HOTPEPPER_API_KEY}&lat=${lat}&lng=${lng}&range=${range}&count=${countValue}&order=3&format=json`;
+    const apiUrl = `https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${HOTPEPPER_API_KEY}&lat=${lat}&lng=${lng}&range=${range}&count=${perPage}&start=${start}&order=4&format=json`;
     console.log("Requesting Hotpepper API:", apiUrl);
 
     // Hotpepper API にリクエスト (タイムアウト: 5秒)
@@ -45,7 +43,12 @@ router.get("/", async (req, res) => {
     }
 
     // クライアントに JSON 形式でレストラン情報を返す
-    res.json(restaurants);
+    res.json({
+      total: data.results.results_available, // 전체 검색 결과 데이터 갯수
+      perPage, // 한 페이지당 표시할 데이터 갯수
+      currentPage: page, // 현재 페이지 번호
+      restaurants,
+    });
   } catch (error) {
     console.log(error.message);
     // サーバーまたはクライアントの接続が異常終了した場合のエラー処理
