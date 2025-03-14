@@ -1,5 +1,5 @@
 const GenreSelector = ({ onGenreChange }) => {
-  // 음식점 장르 옵션
+  // 飲食店のジャンルオプション
   const genreOptions = [
     { value: "G000", label: "すべて" }, // 全ジャンル (仮のオプション)
     { value: "G001", label: "居酒屋" },

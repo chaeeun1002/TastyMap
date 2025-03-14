@@ -13,7 +13,7 @@ const SavedRestaurants = () => {
   const [saved, setSaved] = useState(getSavedRestaurants());
   const [savedRestaurants, setSavedRestaurants] = useState([]);
 
-  // localStorage에서 찜한 가게 목록을 불러옴
+  // localStorageからお気に入りのレストランリストを取得
   useEffect(() => {
     const storedSaved = localStorage.getItem("savedRestaurants");
     if (storedSaved) {
@@ -34,9 +34,9 @@ const SavedRestaurants = () => {
     }
   }, [saved]);
 
-  // 레스토랑 좋아요 취소기능
+  // レストランのお気に入り解除機能
   const toggleSave = (id) => {
-    let updatedSaved = updateSavedRestaurants(id); // 해당 레스토랑 ID 제거
+    let updatedSaved = updateSavedRestaurants(id); // 対象のレストランIDを削除
     setSaved(updatedSaved);
     setSavedRestaurants((prev) => prev.filter((res) => res.id !== id));
   };
@@ -63,7 +63,7 @@ const SavedRestaurants = () => {
               <p>{restaurant.open}</p>
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // 상세페이지 이동 방지
+                  e.stopPropagation(); // 詳細ページへの遷移を防ぐ
                   toggleSave(restaurant.id);
                 }}
               >

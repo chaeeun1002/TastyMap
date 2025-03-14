@@ -15,12 +15,12 @@ const RestaurantList = ({
   onPageChange,
 }) => {
   const navigate = useNavigate(); // 画面遷移用のフック
-  const totalPages = calculateTotalPages(total, perPage); // 全ページ数を計算
+  const totalPages = calculateTotalPages(total / perPage); // 全ページ数を計算
 
-  // 찜한 레스토랑 리스트(localstorage에서 불러옴)
+  // お気に入りのレストランリストを取得（localStorageから読み込み）
   const [saved, setSaved] = useState(getSavedRestaurants());
 
-  // 레스토랑 좋아요 추가/삭제 기능
+  // レストランの「お気に入り」追加/削除機能
   const toggleSave = (id) => {
     const updatedSaved = updateSavedRestaurants(id);
     setSaved(updatedSaved);
@@ -52,10 +52,10 @@ const RestaurantList = ({
               </h3>
               <p>{restaurant.address}</p>
               <p>{restaurant.open}</p>
-              {/* 찜하기버튼 */}
+              {/* お気に入りボタン */}
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // 상세페이지 이동 방지
+                  e.stopPropagation(); // 詳細ページへの遷移を防ぐ
                   toggleSave(restaurant.id);
                 }}
               >

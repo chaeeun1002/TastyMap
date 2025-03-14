@@ -1,4 +1,4 @@
-// 오늘날짜(요일)
+// 今日の曜日を取得
 export const getToday = () => {
   const days = ["日", "月", "火", "水", "木", "金", "土"];
   const today = new Date().getDay(); //0（日)～６（土）
@@ -6,19 +6,19 @@ export const getToday = () => {
   return days[today];
 };
 
-// 오늘날짜가 레스토랑의 정기휴무인지 확인
+// 今日がレストランの定休日かどうかを確認
 export const isClosedToday = (restaurants) => {
   if (!restaurants.close || restaurants.close === "なし") return false;
   return restaurants.close.includes(getToday());
 };
 
-// localStorage에서 찜한 가게 목록 불러오기
+// localStorageからお気に入りのレストランリストを取得
 export const getSavedRestaurants = () => {
   const savedData = localStorage.getItem("savedRestaurants");
   return savedData ? JSON.parse(savedData) : [];
 };
 
-// 찜 목록에 레스토랑을 추가/삭제하는 함수
+// お気に入りリストにレストランを追加/削除する関数
 export const updateSavedRestaurants = (id) => {
   let saved = getSavedRestaurants();
   if (saved.includes(id)) {
@@ -30,7 +30,7 @@ export const updateSavedRestaurants = (id) => {
   return saved;
 };
 
-// 전체 페이지 수 계산
+// 全ページ数を計算
 export const calculateTotalPages = (total, perPage) => {
   console.log("total:", total);
   console.log("perPage:", perPage);
