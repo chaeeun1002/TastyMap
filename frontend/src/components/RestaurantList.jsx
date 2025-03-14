@@ -15,7 +15,8 @@ const RestaurantList = ({
   onPageChange,
 }) => {
   const navigate = useNavigate(); // 画面遷移用のフック
-  const totalPages = calculateTotalPages(total / perPage); // 全ページ数を計算
+  const totalPages = calculateTotalPages(total, perPage); // 全ページ数を計算
+  console.log("totalPages:", totalPages);
 
   // お気に入りのレストランリストを取得（localStorageから読み込み）
   const [saved, setSaved] = useState(getSavedRestaurants());
