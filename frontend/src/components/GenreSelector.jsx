@@ -23,19 +23,19 @@ const GenreSelector = ({ onGenreChange }) => {
     { value: "G017", label: "韓国料理" },
   ];
 
-  // 선택한 장르 리스트(다중선택가능)
-  const [selectedGenre, setSelectedGenre] = useState(["G000"]); // 기본값 : 전체
+  // 選択されたジャンルリスト(複数選択可能)
+  const [selectedGenre, setSelectedGenre] = useState(["G000"]); // デフォルト値:すべて
 
-  // 체크박스 변경시 선택된 장르 업데이트
+  // チェックボックスの変更時に選択されたジャンルを更新
   const handleGenreChange = (value) => {
     let updatedGenres;
     if (value === "G000") {
-      // 전체 선택시 체크박스 초기화
+      // "すべて" を選択した場合、チェックボックスをリセット
       updatedGenres = ["G000"];
     } else {
       updatedGenres = selectedGenre.includes(value)
-        ? selectedGenre.filter((genre) => genre !== value) // 체크 해제
-        : [...selectedGenre.filter((gen) => gen !== "G000"), value]; // 추가 체크
+        ? selectedGenre.filter((genre) => genre !== value) // チェックを削除
+        : [...selectedGenre.filter((gen) => gen !== "G000"), value]; // チェックを追加
     }
 
     console.log("selectedGenre:", selectedGenre);
