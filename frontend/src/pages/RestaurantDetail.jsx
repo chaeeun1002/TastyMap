@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchRestaurantById } from "../api";
+import { fetchRestaurantById } from "../api/api";
+import { isClosedToday } from "../utils/utils";
 
 const RestaurantDetail = () => {
   const { id } = useParams(); // URLからレストランのIDを取得
@@ -23,11 +24,18 @@ const RestaurantDetail = () => {
 
   return (
     <div>
-      <h2>{restaurant.name}</h2>
+      <h2>
+        {restaurant.name}
+        {isClosedToday(restaurant) && (
+          <span style={{ color: "red" }}>（定休日）</span>
+        )}
+      </h2>
       <img src={restaurant.photo.pc.l} alt={restaurant.name} width="300" />
       <p>住所: {restaurant.address}</p>
       <p>営業時間: {restaurant.open}</p>
       <p>アクセス: {restaurant.access}</p>
+      <p>駐車場: {restaurant.parking}</p>
+      <p>子供連れOK: {restaurant.child}</p>
     </div>
   );
 };
