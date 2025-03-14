@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchRestaurantById } from "../api/api";
 import { isClosedToday } from "../utils/utils";
+import GooGoogleMapWrapper from "../components/GoogleMap";
 
 const RestaurantDetail = () => {
   const { id } = useParams(); // URLからレストランのIDを取得
@@ -31,6 +32,14 @@ const RestaurantDetail = () => {
         )}
       </h2>
       <img src={restaurant.photo.pc.l} alt={restaurant.name} width="300" />
+      {/* 地図を表示 */}
+      {restaurant.lat && restaurant.lng && (
+        <GooGoogleMapWrapper
+          lat={restaurant.lat}
+          lng={restaurant.lng}
+          zoom={18}
+        />
+      )}
       <p>住所: {restaurant.address}</p>
       <p>営業時間: {restaurant.open}</p>
       <p>アクセス: {restaurant.access}</p>
