@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import RangeSelector from "./components/RangeSelector";
 import GenreSelector from "./components/GenreSelector";
 import RestaurantList from "./components/RestaurantList";
 import RestaurantDetail from "./pages/RestaurantDetail";
-import { fetchRestaurants } from "./api";
+import SavedRestaurants from "./components/SavedRestaurants";
+import { fetchRestaurants } from "../src/api/api";
 
 // アプリのメインコンポーネント
 const App = () => {
@@ -59,6 +60,9 @@ const App = () => {
         element={
           <div>
             <h1>レストラン検索</h1>
+            <nav>
+              <Link to="/">ホーム</Link> |<Link to="/saved">お気に入り</Link>
+            </nav>
             <RangeSelector onSearch={setRange} />
             <GenreSelector onGenreChange={setGenre} />
             <RestaurantList
@@ -72,6 +76,7 @@ const App = () => {
         }
       />
       <Route path="/restaurant/:id" element={<RestaurantDetail />} />
+      <Route path="/saved" element={<SavedRestaurants />} />
     </Routes>
   );
 };

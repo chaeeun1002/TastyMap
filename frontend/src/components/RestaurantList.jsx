@@ -1,5 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  isClosedToday,
+  getSavedRestaurants,
+  updateSavedRestaurants,
+  calculateTotalPages,
+} from "../utils/utils";
 
 const RestaurantList = ({
   restaurants,
@@ -9,7 +15,16 @@ const RestaurantList = ({
   onPageChange,
 }) => {
   const navigate = useNavigate(); // 画面遷移用のフック
-  const totalPages = Math.ceil(total / perPage); // 全ページ数を計算
+  const totalPages = calculateTotalPages(total, perPage); // 全ページ数を計算
+
+  // 찜한 레스토랑 리스트(localstorage에서 불러옴)
+  const [saved, setSaved] = useState(getSavedRestaurants());
+
+  // 레스토랑 좋아요 추가/삭제 기능
+  const toggleSave = (id) => {
+    const updatedSaved = updateSavedRestaurants(id);
+    setSaved(updatedSaved);
+  };
 
   return (
     <div>
@@ -29,9 +44,23 @@ const RestaurantList = ({
                 alt={restaurant.name}
                 width="100"
               />
-              <h3>{restaurant.name}</h3>
+              <h3>
+                {restaurant.name}
+                {isClosedToday(restaurant) && (
+                  <span style={{ color: "red" }}>（定休日）</span>
+                )}
+              </h3>
               <p>{restaurant.address}</p>
               <p>{restaurant.open}</p>
+              {/* 찜하기버튼 */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation(); // 상세페이지 이동 방지
+                  toggleSave(restaurant.id);
+                }}
+              >
+                {saved.includes(restaurant.id) ? "♥" : "♡"}
+              </button>
             </li>
           ))}
         </ul>
