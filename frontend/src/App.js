@@ -16,7 +16,7 @@ const App = () => {
   const [lat, setLat] = useState(35.6895); // 位置情報を管理
   const [lng, setLng] = useState(139.6917);
   const [range, setRange] = useState("3"); // 検索範囲（初期値3）
-  const [genre, setGenre] = useState("G000"); // ジャンル選択（初期値 all）
+  const [genre, setGenre] = useState(["G000"]); // ジャンル選択（初期値 all）
 
   // 検索処理関数
   const handleSearch = async (
@@ -39,7 +39,7 @@ const App = () => {
       lat,
       lng,
       selectedRange,
-      selectedGenre,
+      selectedGenre.join(","),
       selectedPage
     );
     // 取得したデータを状態に反映
