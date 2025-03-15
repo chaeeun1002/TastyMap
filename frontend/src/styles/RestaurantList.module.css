@@ -1,0 +1,51 @@
+.restaurantContainer {
+  border: 1px solid;
+}
+
+.restaurantGrid {
+  border: 1px solid;
+}
+
+.restaurantCard {
+  border: 1px solid;
+  display: flex;
+  margin: 1%;
+  align-items: center;
+}
+
+.restaurantImg {
+  width: 250px;
+  height: 200px;
+}
+
+.restaurantImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.restaurantInfo {
+  border: 1px solid;
+  width: 100%;
+  height: 200px;
+  margin-left: 10px;
+}
+
+.restaurantName {
+  /* border: 1px solid; */
+  justify-content: center;
+  height: 33%;
+}
+
+.restaurantAddr {
+  /* border: 1px solid; */
+  justify-content: center;
+  height: 33%;
+}
+
+.restaurantOpen {
+  /* border: 1px solid; */
+  justify-content: center;
+  height: 33%;
+}

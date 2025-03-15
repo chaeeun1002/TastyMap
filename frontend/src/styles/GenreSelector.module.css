@@ -1,0 +1,11 @@
+.genreSelectorContainer {
+  border: 1px solid;
+}
+
+.genreCheckBox {
+  border: 1px solid;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 10px;
+}

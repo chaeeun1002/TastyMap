@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "../styles/GenreSelector.module.css";
 
 const GenreSelector = ({ onGenreChange }) => {
   // 飲食店のジャンルオプション
@@ -44,22 +45,24 @@ const GenreSelector = ({ onGenreChange }) => {
     onGenreChange(updatedGenres);
   };
   return (
-    <div>
+    <div className={styles.genreSelectorContainer}>
       <h3>ジャンルを選択</h3>
-      {genreOptions.map((genre) => (
-        <label
-          key={genre.value}
-          style={{ display: "block", marginBottom: "5px" }}
-        >
-          <input
-            type="checkbox"
-            value={genre.value}
-            checked={selectedGenre.includes(genre.value)}
-            onChange={() => handleGenreChange(genre.value)}
-          />
-          {genre.label}
-        </label>
-      ))}
+      <div className={styles.genreCheckBox}>
+        {genreOptions.map((genre) => (
+          <label
+            key={genre.value}
+            style={{ display: "block", marginBottom: "5px" }}
+          >
+            <input
+              type="checkbox"
+              value={genre.value}
+              checked={selectedGenre.includes(genre.value)}
+              onChange={() => handleGenreChange(genre.value)}
+            />
+            {genre.label}
+          </label>
+        ))}
+      </div>
     </div>
   );
 };
