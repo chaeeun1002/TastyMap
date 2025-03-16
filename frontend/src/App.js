@@ -6,6 +6,8 @@ import RestaurantList from "./components/RestaurantList";
 import RestaurantDetail from "./components/RestaurantDetailModal";
 import SavedRestaurants from "./components/SavedRestaurants";
 import { fetchRestaurants } from "../src/api/api";
+import ScrollToTopButton from "./components/ScrollToTopButton";
+import "./App.css";
 
 // アプリのメインコンポーネント
 const App = () => {
@@ -54,30 +56,41 @@ const App = () => {
   }, [range, genre]);
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <div>
-            <h1>レストラン検索</h1>
-            <nav>
-              <Link to="/">ホーム</Link> |<Link to="/saved">お気に入り</Link>
-            </nav>
-            <RangeSelector onSearch={setRange} />
-            <GenreSelector onGenreChange={setGenre} />
-            <RestaurantList
-              restaurants={restaurants}
-              total={total}
-              perPage={perPage}
-              currentPage={page}
-              onPageChange={(newPage) => handleSearch(range, genre, newPage)}
-            />
-          </div>
-        }
-      />
-      <Route path="/restaurant/:id" element={<RestaurantDetail />} />
-      <Route path="/saved" element={<SavedRestaurants />} />
-    </Routes>
+    <div className="app">
+      <header className="header">
+        <Link to="/" className="logo">
+          <h1>TastyMap</h1>
+        </Link>
+        <nav>
+          <Link to="/saved">お気に入り</Link>
+        </nav>
+      </header>
+      <div className="content">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                <RangeProgressBar onRangeChange={setRange} />
+                <GenreSelector onGenreChange={setGenre} />
+                <RestaurantList
+                  restaurants={restaurants}
+                  total={total}
+                  perPage={perPage}
+                  currentPage={page}
+                  onPageChange={(newPage) =>
+                    handleSearch(range, genre, newPage)
+                  }
+                />
+              </div>
+            }
+          />
+          <Route path="/restaurant/:id" element={<RestaurantDetail />} />
+          <Route path="/saved" element={<SavedRestaurants />} />
+        </Routes>
+      </div>
+      <ScrollToTopButton />
+    </div>
   );
 };
 
