@@ -12,6 +12,12 @@ export const isClosedToday = (restaurants) => {
   return restaurants.close.includes(getToday());
 };
 
+// 영업시간 포맷함수 (')'가 나올때마다 줄바꿈처리)
+export const getFormattedOpenHours = (openHours) => {
+  if (!openHours) return "営業時間情報なし";
+  return openHours.replace(/\）/g, "）\n");
+};
+
 // localStorageからお気に入りのレストランリストを取得
 export const getSavedRestaurants = () => {
   const savedData = localStorage.getItem("savedRestaurants");
