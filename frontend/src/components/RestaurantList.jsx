@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/RestaurantList.module.css";
+import heart from "../assets/imgs/heart.png";
+import heartFill from "../assets/imgs/heart_fill.png";
+import RestaurantDetailModal from "../components/RestaurantDetailModal";
 import {
   isClosedToday,
   getSavedRestaurants,
   updateSavedRestaurants,
   calculateTotalPages,
+  getFormattedOpenHours,
 } from "../utils/utils";
 
 const RestaurantList = ({
@@ -28,9 +32,24 @@ const RestaurantList = ({
     setSaved(updatedSaved);
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false); // モーダルの状態
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null); // 選択したレストラン情報
+
+  // モーダルを開く関数
+  const handleOpenModal = (restaurant) => {
+    setSelectedRestaurant(restaurant);
+    setIsModalOpen(true);
+  };
+
+  // モーダルを閉じる関数
+  const handleCloseModel = () => {
+    setIsModalOpen(false);
+    setSelectedRestaurant(null);
+  };
+
   return (
     <div className={styles.restaurantContainer}>
-      <h2>レストラン一覧</h2>
+      <h2 className={styles.restaurantListTitle}>レストラン一覧</h2>
       {restaurants.length === 0 ? (
         <p>該当するレストランがありません。</p>
       ) : (
@@ -40,42 +59,61 @@ const RestaurantList = ({
             <div
               key={restaurant.id} // 各レストランのIDをkeyとして設定
               className={styles.restaurantCard}
-              onClick={() => navigate(`/restaurant/${restaurant.id}`)} // クリック時に詳細ページへ遷移
             >
               <div className={styles.restaurantImg}>
                 <img src={restaurant.photo.pc.l} alt={restaurant.name} />
               </div>
               <div className={styles.restaurantInfo}>
                 <div className={styles.restaurantName}>
-                  <p>
-                    {restaurant.name}
-                    {isClosedToday(restaurant) && (
-                      <span style={{ color: "red" }}>（定休日）</span>
+                  <div className={styles.restaurantNameWrapper}>
+                    {/* クリック時にモーダルをopen */}
+                    <p onClick={() => handleOpenModal(restaurant)}>
+                      {restaurant.name}
+                    </p>
+                    {isClosedToday(restaurant) && <span>定休日</span>}
+                  </div>
+                  {/* お気に入りボタン */}
+                  <button
+                    onClick={(e) => {
+                      toggleSave(restaurant.id);
+                    }}
+                  >
+                    {saved.includes(restaurant.id) ? (
+                      <img src={heartFill} />
+                    ) : (
+                      <img src={heart} />
                     )}
-                    {/* お気に入りボタン */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation(); // 詳細ページへの遷移を防ぐ
-                        toggleSave(restaurant.id);
-                      }}
-                    >
-                      {saved.includes(restaurant.id) ? "♥" : "♡"}
-                    </button>
-                  </p>
+                  </button>
                 </div>
                 <div className={styles.restaurantAddr}>
                   <p>{restaurant.address}</p>
                 </div>
                 <div className={styles.restaurantOpen}>
-                  <p>{restaurant.open}</p>
+                  <p>
+                    {getFormattedOpenHours(restaurant.open)
+                      .split("\n")
+                      .map((line, index) => (
+                        <span key={index}>
+                          {line}
+                          <br />
+                        </span>
+                      ))}
+                  </p>
                 </div>
               </div>
             </div>
           ))}
         </div>
       )}
+      {/* モーダルコンポーネント */}
+      {isModalOpen && selectedRestaurant && (
+        <RestaurantDetailModal
+          restaurant={selectedRestaurant}
+          onClose={handleCloseModel}
+        />
+      )}
       {/* ページネーションボタン */}
-      <div>
+      <div className={styles.restaurantPage}>
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1} // 1ページ目では非活性化
@@ -83,7 +121,7 @@ const RestaurantList = ({
           前へ
         </button>
         <span>
-          {currentPage} / {totalPages}
+          {currentPage} - {totalPages}
         </span>
         <button
           onClick={() => onPageChange(currentPage + 1)}
