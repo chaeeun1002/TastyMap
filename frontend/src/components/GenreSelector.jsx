@@ -46,19 +46,20 @@ const GenreSelector = ({ onGenreChange }) => {
   };
   return (
     <div className={styles.genreSelectorContainer}>
-      <h3>ジャンルを選択</h3>
+      <div className={styles.genreSelectorTitle}>
+        <h3>ジャンルを選択</h3>
+      </div>
       <div className={styles.genreCheckBox}>
         {genreOptions.map((genre) => (
-          <label
-            key={genre.value}
-            style={{ display: "block", marginBottom: "5px" }}
-          >
+          <label key={genre.value} className={styles.checkboxLabel}>
             <input
               type="checkbox"
+              className={styles.genreCheckboxInput}
               value={genre.value}
               checked={selectedGenre.includes(genre.value)}
               onChange={() => handleGenreChange(genre.value)}
             />
+            <span className={styles.customGenreCheckbox}></span>
             {genre.label}
           </label>
         ))}
