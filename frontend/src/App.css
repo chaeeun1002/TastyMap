@@ -36,3 +36,58 @@
     transform: rotate(360deg);
   }
 }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  position: fixed;
+  padding-bottom: 20px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 65px;
+  background: rgb(151, 198, 128);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.logo {
+  margin-top: -10px;
+  text-decoration: none;
+  color: rgb(30, 30, 47);
+  transition: color 0.5s ease-in-out;
+}
+
+.logo:hover {
+  color: #fff;
+}
+
+nav {
+  display: flex;
+  margin-right: 50px;
+}
+
+nav a {
+  text-decoration: none;
+  color: rgb(30, 30, 47);
+  font-size: 18px;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+  color: #fff;
+}
+
+.content {
+  padding-top: 150px; /* 헤더 높이만큼 여백 추가 */
+  flex: 1;
+}

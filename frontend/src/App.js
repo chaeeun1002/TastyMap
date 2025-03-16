@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import RangeSelector from "./components/RangeSelector";
+import RangeProgressBar from "./components/RangeProgressBar";
 import GenreSelector from "./components/GenreSelector";
 import RestaurantList from "./components/RestaurantList";
-import RestaurantDetail from "./pages/RestaurantDetail";
+import RestaurantDetail from "./components/RestaurantDetailModal";
 import SavedRestaurants from "./components/SavedRestaurants";
 import { fetchRestaurants } from "../src/api/api";
+import "./App.css";
 
 // アプリのメインコンポーネント
 const App = () => {
@@ -15,7 +16,7 @@ const App = () => {
   const perPage = 10; // 1ページに表示するレストランの数
   const [lat, setLat] = useState(35.6895); // 位置情報を管理
   const [lng, setLng] = useState(139.6917);
-  const [range, setRange] = useState("3"); // 検索範囲（初期値3）
+  const [range, setRange] = useState(3); // 検索範囲（初期値3）
   const [genre, setGenre] = useState(["G000"]); // ジャンル選択（初期値 all）
 
   // 検索処理関数
@@ -54,30 +55,40 @@ const App = () => {
   }, [range, genre]);
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <div>
-            <h1>レストラン検索</h1>
-            <nav>
-              <Link to="/">ホーム</Link> |<Link to="/saved">お気に入り</Link>
-            </nav>
-            <RangeSelector onSearch={setRange} />
-            <GenreSelector onGenreChange={setGenre} />
-            <RestaurantList
-              restaurants={restaurants}
-              total={total}
-              perPage={perPage}
-              currentPage={page}
-              onPageChange={(newPage) => handleSearch(range, genre, newPage)}
-            />
-          </div>
-        }
-      />
-      <Route path="/restaurant/:id" element={<RestaurantDetail />} />
-      <Route path="/saved" element={<SavedRestaurants />} />
-    </Routes>
+    <div className="app">
+      <header className="header">
+        <Link to="/" className="logo">
+          <h1>TastyMap</h1>
+        </Link>
+        <nav>
+          <Link to="/saved">お気に入り</Link>
+        </nav>
+      </header>
+      <div className="content">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                <RangeProgressBar onRangeChange={setRange} />
+                <GenreSelector onGenreChange={setGenre} />
+                <RestaurantList
+                  restaurants={restaurants}
+                  total={total}
+                  perPage={perPage}
+                  currentPage={page}
+                  onPageChange={(newPage) =>
+                    handleSearch(range, genre, newPage)
+                  }
+                />
+              </div>
+            }
+          />
+          <Route path="/restaurant/:id" element={<RestaurantDetail />} />
+          <Route path="/saved" element={<SavedRestaurants />} />
+        </Routes>
+      </div>
+    </div>
   );
 };
 
