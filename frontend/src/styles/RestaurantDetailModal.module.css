@@ -1,0 +1,175 @@
+/* モーダル全体のオーバーレイ（背景の暗い部分） */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* モーダルの本体（白いボックス） */
+.modalContent {
+  background: white;
+  /* padding: 20px; */
+  /* padding-top: 20px; */
+  padding-bottom: 40px;
+  border-radius: 10px;
+  width: 1000px;
+  max-height: 80vh;
+  overflow-y: auto;
+  text-align: center;
+  position: relative;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* モーダル表示時のアニメーション */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* スクロールバーを非表示にする */
+.modalContent::-webkit-scrollbar {
+  display: none;
+}
+
+/* スクロールバーのスライダー部分（非表示設定） */
+.modalContent::-webkit-scrollbar-thumb {
+  scrollbar-width: none;
+}
+
+/* スクロールバーの背景部分 */
+.modalContent::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* モーダルのタイトルデザイン */
+.modalTitle {
+  /* border: 1px solid; */
+  padding: 3px;
+  margin-bottom: 30px;
+  background-color: #97c680;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 画像の配置 */
+.modalImgWrap {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* 画像のサイズとスタイル */
+.modalImage {
+  width: 30%;
+  border-radius: 5px;
+}
+
+/* レストラン名と定休日ラベルの配置 */
+.restaurantNameWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* 定休日ラベルのスタイル */
+.restaurantNameWrap span {
+  display: flex;
+  background-color: #f2f3f5;
+  color: #6c757d;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 12px;
+  line-height: 1.5;
+}
+
+/* レストラン名のスタイル */
+.restaurantNameWrap p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Googleマップの配置 */
+.restaurantMap {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+/* Googleマップのサイズとデザイン */
+.modalMap {
+  border: 1px solid;
+  width: 80%;
+  max-width: 600px;
+  height: 300px;
+  border-radius: 5px;
+}
+
+/* レストラン情報の表を中央に配置 */
+.restaurantTableWrap {
+  display: flex;
+  justify-content: center;
+}
+
+/* 表の見出し部分のスタイル */
+.columnSpan {
+  display: flex;
+  background-color: #97c680;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 12px;
+  line-height: 1.5;
+}
+
+/* レストラン情報の表全体のデザイン */
+.restaurantTable {
+  width: 70%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+/* テーブルの見出しのデザイン */
+.restaurantTable th {
+  text-align: center;
+  vertical-align: top;
+  width: 15%;
+  border-radius: 12px;
+  padding-bottom: 10px;
+}
+
+/* テーブルのデータ部分のデザイン */
+.restaurantTable td {
+  /* border: 1px solid; */
+  vertical-align: top;
+  padding-left: 20px;
+  text-align: left;
+}
+
+/* 営業時間の表示スタイル */
+.openTime {
+  background-color: white;
+  line-height: 1.5;
+  display: block;
+}

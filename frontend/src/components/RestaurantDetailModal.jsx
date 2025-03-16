@@ -9,9 +9,11 @@ const RestaurantDetailModal = ({ restaurant, onClose }) => {
   }
 
   return (
+    // モーダル全体を覆うオーバーレイ（クリックすると閉じる）
     <div className={styles.modalOverlay} onClick={onClose}>
+      {/* モーダルコンテンツ（クリックしても閉じないように `stopPropagation`） */}
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-        <div className={styles.modelTitle}>
+        <div className={styles.modalTitle}>
           <h3>レストランの詳細情報</h3>
         </div>
         <div className={styles.modalImgWrap}>
@@ -25,7 +27,7 @@ const RestaurantDetailModal = ({ restaurant, onClose }) => {
           <p>{restaurant.name}</p>
           {isClosedToday(restaurant) && <span>（定休日）</span>}
         </div>
-        {/* 가게 위치 지도 */}
+        {/* レストランの位置を示すマップ */}
         <div className={styles.restaurantMap}>
           {restaurant.lat && restaurant.lng && (
             <GooGoogleMapWrapper
