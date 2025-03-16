@@ -12,6 +12,12 @@ export const isClosedToday = (restaurants) => {
   return restaurants.close.includes(getToday());
 };
 
+// 営業時間のフォーマット関数（"）"ごとに改行を追加）
+export const getFormattedOpenHours = (openHours) => {
+  if (!openHours) return "営業時間情報なし";
+  return openHours.replace(/\）/g, "）\n");
+};
+
 // localStorageからお気に入りのレストランリストを取得
 export const getSavedRestaurants = () => {
   const savedData = localStorage.getItem("savedRestaurants");
