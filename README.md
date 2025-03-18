@@ -21,7 +21,7 @@
 －地図機能：@react-google-maps/api 2.20.6<br/>
 
 
-## Installation & Setup<br/>
+## 8.	開発環境構築手順<br/>
 $ git clone https://github.com/chaeeun1002/TastyMap<br/>
 
 $ cd TastyMap<br/>
