@@ -1,9 +1,7 @@
 # Node.js関連 (バックエンド)
 node_modules/
-.env
 *.log
 
 # React関連 (フロントエンド)
 frontend/node_modules/
-frontend/.env
 frontend/build/
