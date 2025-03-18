@@ -8,7 +8,7 @@
 .restaurantListTitle {
   font-size: 24px;
   font-weight: bold;
-  color: #4b4c4d;
+  color: #333;
   padding-bottom: 10px;
 }
 
@@ -160,7 +160,7 @@
   align-items: center;
   gap: 30px;
   margin-top: 40px;
-  color: rgb(87, 85, 85);
+  color: #333;
 }
 
 .restaurantPage button {
